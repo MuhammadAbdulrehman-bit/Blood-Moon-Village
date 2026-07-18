@@ -1,4 +1,4 @@
-# Spatial Werewolf 
+# Blood Moon Village
 
 An AI-driven simulation where Large Language Model (LLM) agents play a spatial version of the classic social deduction game **Werewolf** (also known as Mafia). 
 
