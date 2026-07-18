@@ -1,0 +1,335 @@
+/* AgentCards.css */
+:root {
+  --card-bg-day: linear-gradient(160deg,#f3e8cf 0%, #e2d2ab 100%);
+  --card-bg-night: linear-gradient(160deg,#140b0e 0%, #0a0608 100%);
+  --fog: rgba(120,20,30,.10);
+  --seer-c: #8e6fb0;
+  --doc-c: #4f8f8a;
+  --dead-c: #4d4a46;
+}
+
+.cards-tab-container {
+  position: relative;
+  width: 100%;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* subtle paper grain just for this container */
+.cards-tab-container::before {
+  content: '';
+  position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  opacity: .5; mix-blend-mode: multiply;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(0,0,0,.05) 0, transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(0,0,0,.05) 0, transparent 45%),
+    repeating-linear-gradient(0deg, rgba(0,0,0,.015) 0 1px, transparent 1px 3px);
+  transition: opacity var(--t);
+}
+body.night .cards-tab-container::before {
+  opacity: .9; mix-blend-mode: screen;
+  background-image:
+    radial-gradient(circle at 30% 20%, rgba(154,17,40,.12) 0, transparent 45%),
+    radial-gradient(circle at 75% 80%, rgba(80,10,20,.15) 0, transparent 50%),
+    repeating-linear-gradient(0deg, rgba(255,255,255,.012) 0 1px, transparent 1px 3px);
+}
+
+/* ---------- vignette ---------- */
+.vignette{
+  position:absolute; inset:0; pointer-events:none; z-index:1;
+  box-shadow: inset 0 0 160px 40px rgba(0,0,0,0);
+  transition: box-shadow var(--t);
+}
+body.night .vignette{
+  box-shadow: inset 0 0 220px 60px rgba(0,0,0,.85);
+}
+
+/* ---------- header ---------- */
+.masthead{
+  position:relative; z-index:3;
+  text-align:center;
+  padding: 10px 20px 10px;
+}
+.subline{
+  font-style:italic; font-size:.92rem; color:var(--ink-soft);
+  max-width:480px; margin:0 auto 6px; opacity:.85;
+  transition: color var(--t);
+}
+body.night .subline{ color:#9a8c78; }
+
+/* ---------- moon phase dial ---------- */
+.moon-dial{
+  width:46px; height:46px; margin:14px auto 0;
+  border-radius:50%;
+  background: radial-gradient(circle at 35% 30%, #fff7e0, var(--candle) 70%);
+  box-shadow: 0 0 18px rgba(217,154,63,.55), inset -6px -6px 10px rgba(0,0,0,.15);
+  position:relative;
+  transition: all var(--t);
+}
+body.night .moon-dial{
+  background: radial-gradient(circle at 35% 30%, #f4ecd8, var(--moon) 65%, #8f8064 100%);
+  box-shadow: 0 0 30px var(--moon-glow), 0 0 70px rgba(200,50,60,.25), inset -6px -6px 10px rgba(0,0,0,.35);
+}
+.moon-dial::after{ /* eclipse shadow that creeps in at night */
+  content:''; position:absolute; inset:0; border-radius:50%;
+  background: var(--void-deep);
+  transform: translateX(46px);
+  transition: transform var(--t);
+}
+body.night .moon-dial::after{ transform: translateX(9px); }
+
+/* ---------- controls ---------- */
+.cards-controls{
+  position:relative; z-index:3;
+  display:flex; gap:14px; justify-content:center; flex-wrap:wrap;
+  margin: 22px 0 8px;
+}
+.count-pill{
+  font-family:'Cinzel',serif; font-size:.68rem; letter-spacing:.1em;
+  align-self:center; color:var(--ink-soft); opacity:.8;
+}
+body.night .count-pill{ color:#9a8c78; }
+
+/* ---------- particles ---------- */
+.fx-layer{ position:absolute; inset:0; pointer-events:none; z-index:2; overflow:hidden; }
+.firefly{
+  position:absolute; width:3px; height:3px; border-radius:50%;
+  background: var(--candle); opacity:0;
+  box-shadow:0 0 6px 2px rgba(217,154,63,.7);
+  animation: floaty 9s ease-in-out infinite;
+}
+body.night .firefly{
+  background: var(--blood-bright);
+  box-shadow:0 0 8px 3px rgba(226,58,78,.65);
+  animation-name: embers;
+}
+@keyframes floaty{
+  0%{ opacity:0; transform:translateY(0) translateX(0);}
+  15%{opacity:.8;}
+  50%{ transform:translateY(-40px) translateX(15px); }
+  85%{opacity:.5;}
+  100%{ opacity:0; transform:translateY(-90px) translateX(-10px);}
+}
+@keyframes embers{
+  0%{ opacity:0; transform:translateY(10px) translateX(0);}
+  20%{opacity:.9;}
+  100%{ opacity:0; transform:translateY(-140px) translateX(20px);}
+}
+.fog{
+  position:absolute; bottom:0; left:-20%; width:140%; height:220px;
+  background: radial-gradient(ellipse at center, var(--fog) 0%, transparent 70%);
+  opacity:0; filter:blur(8px);
+  animation: drift 26s linear infinite;
+  transition: opacity var(--t);
+}
+body.night .fog{ opacity:1; }
+@keyframes drift{
+  0%{ transform:translateX(-5%);}
+  50%{ transform:translateX(5%);}
+  100%{ transform:translateX(-5%);}
+}
+
+/* ---------- scene ---------- */
+.scene{
+  position:relative; z-index:3;
+  width:100%; height:600px; perspective:1300px;
+  display:flex; align-items:center; justify-content:center;
+  margin-top:10px;
+}
+.carousel{
+  width:230px; height:340px; position:relative;
+  transform-style:preserve-3d;
+  transition: transform .8s cubic-bezier(.25,1,.5,1);
+}
+
+.card{
+  position:absolute; width:230px; height:340px; left:0; top:0;
+  background: var(--card-bg-day);
+  border: 1px solid var(--border-day);
+  border-radius: 3px;
+  padding: 18px 16px;
+  display:flex; flex-direction:column; align-items:center; text-align:center;
+  box-shadow: 0 14px 34px rgba(40,25,10,.35), inset 0 0 0 1px rgba(255,255,255,.15);
+  transition: transform .55s cubic-bezier(.175,.885,.32,1.275),
+              border-color .5s, box-shadow .5s, background .6s, filter .5s;
+}
+/* torn parchment corner accents */
+.card::before{
+  content:''; position:absolute; top:7px; left:7px; right:7px; bottom:7px;
+  border:1px solid rgba(122,31,43,.25); border-radius:2px; pointer-events:none;
+  transition: border-color .5s;
+}
+body.night .card::before{ border-color: rgba(226,58,78,.18); }
+
+.card:hover:not(.is-dead){
+  border-color: var(--oxblood-bright) !important;
+  box-shadow: 0 0 30px rgba(122,31,43,.4), 0 14px 34px rgba(0,0,0,.4);
+  cursor:pointer;
+}
+body.night .card{
+  background: var(--card-bg-night);
+  border-color: var(--border-night);
+  box-shadow: 0 14px 34px rgba(0,0,0,.7), inset 0 0 0 1px rgba(226,58,78,.06);
+}
+body.night .card:hover:not(.is-dead){
+  border-color: var(--blood-bright) !important;
+  box-shadow: 0 0 34px rgba(226,58,78,.35), 0 14px 34px rgba(0,0,0,.7);
+}
+
+.seal{
+  position:absolute; top:10px; right:12px;
+  font-family:'Cinzel',serif; font-size:.6rem; letter-spacing:.08em;
+  color: var(--ink-soft); opacity:.55;
+  transition: color .5s;
+}
+body.night .seal{ color:#7a6a58; }
+
+.avatar-frame{
+  width:86px; height:86px; border-radius:50%;
+  background: radial-gradient(circle at 35% 30%, #fff7e6, #d9c69c 75%);
+  margin: 18px 0 14px;
+  border: 3px solid var(--border-day);
+  display:flex; align-items:center; justify-content:center;
+  font-size:2.1rem; position:relative;
+  box-shadow: 0 4px 10px rgba(0,0,0,.25);
+  transition: all .55s ease;
+}
+body.night .avatar-frame{
+  background: radial-gradient(circle at 35% 30%, #241016, #0d0508 75%);
+  border-color: var(--border-night);
+  box-shadow: 0 0 14px rgba(0,0,0,.6);
+}
+
+.agent-id-badge{
+  position:absolute; bottom:-6px;
+  background: var(--oxblood); color:#f3e8cf;
+  font-family:'Cinzel',serif; font-size:.6rem; font-weight:600;
+  padding:2px 9px; border-radius:9px; letter-spacing:.06em;
+  box-shadow:0 2px 4px rgba(0,0,0,.3);
+  transition: background .5s;
+}
+body.night .agent-id-badge{ background: var(--blood); }
+
+.agent-name{
+  font-family:'Cinzel Decorative', serif; font-weight:700;
+  font-size:1.05rem; margin:2px 0 6px; letter-spacing:.02em;
+  color: var(--ink);
+  transition: color .5s;
+}
+body.night .agent-name{ color: var(--moon); }
+
+.role-badge{
+  font-family:'Cinzel',serif;
+  font-size:.62rem; text-transform:uppercase; font-weight:600; letter-spacing:.14em;
+  padding:4px 13px; border-radius:11px; margin-bottom:13px;
+  border:1px solid var(--oxblood); color:var(--oxblood);
+  background: rgba(122,31,43,.06);
+  transition: all .4s;
+}
+.role-doctor{ border-color:var(--doc-c); color:var(--doc-c); background:rgba(79,143,138,.08);}
+.role-seer{ border-color:var(--seer-c); color:var(--seer-c); background:rgba(142,111,176,.08);}
+
+body.night .role-badge{ border-color: var(--blood); color: var(--blood-bright); background:rgba(154,17,40,.1);}
+body.night .role-doctor{ border-color:var(--doc-c); color:#7fd4cc; background:rgba(79,143,138,.1);}
+body.night .role-seer{ border-color:var(--seer-c); color:#c2a8e8; background:rgba(142,111,176,.1);}
+
+.agent-bio{
+  font-size:.76rem; line-height:1.45; color:var(--ink-soft); font-style:italic;
+  margin:0; transition:color .5s;
+}
+body.night .agent-bio{ color:#9a8c78; }
+
+/* ---------- wolf true form ---------- */
+.wolf-true-form{ position:absolute; opacity:0; transform:scale(.4) rotate(-8deg); font-size:2.3rem; transition:all .6s cubic-bezier(.175,.885,.32,1.275);}
+.human-form{ transition:all .45s ease; }
+
+body.night .card.is-wolf:not(.is-dead){
+  border-color: rgba(226,58,78,.65) !important;
+  background: linear-gradient(150deg,#1c0509 0%, #0a0407 100%);
+  box-shadow: 0 0 26px rgba(226,58,78,.28), 0 14px 30px rgba(0,0,0,.7);
+  animation: feralPulse 2.6s ease-in-out infinite;
+}
+@keyframes feralPulse{
+  0%,100%{ box-shadow:0 0 22px rgba(226,58,78,.25), 0 14px 30px rgba(0,0,0,.7);}
+  50%{ box-shadow:0 0 40px rgba(226,58,78,.5), 0 14px 30px rgba(0,0,0,.7);}
+}
+body.night .card.is-wolf:not(.is-dead) .avatar-frame{
+  border-color: var(--blood-bright);
+  box-shadow: 0 0 20px rgba(226,58,78,.55);
+  background: radial-gradient(circle at 35% 30%, #2c0810, #0d0407 75%);
+}
+body.night .card.is-wolf .human-form{ opacity:0; transform:scale(.4) rotate(8deg);}
+body.night .card.is-wolf .wolf-true-form{ opacity:1; transform:scale(1) rotate(0deg);}
+body.night .card.is-wolf:not(.is-dead) .role-wolf{
+  background: var(--blood-bright); color:#160406; border-color:var(--blood-bright);
+  box-shadow:0 0 12px rgba(226,58,78,.6);
+}
+/* claw slash reveal flourish */
+.claw-marks{
+  position:absolute; inset:0; pointer-events:none; opacity:0;
+  background:
+    linear-gradient(78deg, transparent 46%, rgba(226,58,78,.55) 47%, transparent 48%),
+    linear-gradient(78deg, transparent 50%, rgba(226,58,78,.4) 51%, transparent 52%),
+    linear-gradient(78deg, transparent 54%, rgba(226,58,78,.55) 55%, transparent 56%);
+  transition: opacity .5s ease .1s;
+}
+body.night .card.is-wolf:not(.is-dead) .claw-marks{ opacity:1; }
+
+/* ---------- death / elimination ---------- */
+.death-stamp{
+  position:absolute; top:38%; left:50%;
+  transform:translate(-50%,-50%) scale(3) rotate(-18deg);
+  color:#f3e8cf; border:3px double var(--blood-bright);
+  padding:5px 16px; font-family:'Cinzel Decorative',serif;
+  font-size:1.15rem; font-weight:700; letter-spacing:.15em; text-transform:uppercase;
+  border-radius:4px; opacity:0; background:rgba(10,4,6,.92);
+  box-shadow:0 0 20px rgba(226,58,78,.5); pointer-events:none; z-index:11;
+  transition: opacity .1s ease, transform .35s cubic-bezier(.175,.885,.32,1.5);
+}
+.blood-splatter{
+  position:absolute; inset:0; z-index:10; pointer-events:none; opacity:0;
+  background-image:
+    radial-gradient(circle at 22% 30%, rgba(154,17,40,.85) 0 6px, transparent 7px),
+    radial-gradient(circle at 68% 18%, rgba(154,17,40,.7) 0 4px, transparent 5px),
+    radial-gradient(circle at 80% 62%, rgba(154,17,40,.75) 0 9px, transparent 10px),
+    radial-gradient(circle at 35% 78%, rgba(154,17,40,.6) 0 5px, transparent 6px),
+    radial-gradient(circle at 55% 50%, rgba(154,17,40,.55) 0 14px, transparent 15px);
+  transition: opacity .25s ease;
+}
+.card.is-dead .blood-splatter{ opacity:1; }
+.card.is-dead .death-stamp{ opacity:1; transform:translate(-50%,-50%) scale(1) rotate(-13deg); }
+.card.is-dead{
+  filter:grayscale(.92) brightness(.42);
+  border-color:var(--dead-c) !important;
+  box-shadow:none !important;
+  background: rgba(15,12,10,.9) !important;
+  cursor:not-allowed;
+  animation: cardImpact .45s ease-out;
+}
+.card.is-dead .avatar-frame{ border-color:var(--dead-c) !important; background:#15110d !important; box-shadow:none !important; }
+.card.is-dead .role-badge{ border-color:var(--dead-c) !important; color:var(--dead-c) !important; background:none !important; box-shadow:none !important; }
+.card.is-dead .claw-marks{ opacity:0 !important; }
+
+@keyframes cardImpact{
+  0%{ transform:var(--card-base-transform) translateY(0) scale(1);}
+  10%{ transform:var(--card-base-transform) translateY(-12px) rotateZ(-3deg);}
+  30%{ transform:var(--card-base-transform) translateY(6px) rotateZ(3deg);}
+  50%{ transform:var(--card-base-transform) translateY(-6px) rotateZ(-2deg);}
+  70%{ transform:var(--card-base-transform) translateY(3px) rotateZ(1deg);}
+  100%{ transform:var(--card-base-transform) translateY(44px) scale(.95);}
+}
+
+.cards-footer{
+  position:relative; z-index:3; text-align:center; padding:20px 10px 40px;
+  font-family:'Cinzel',serif; font-size:.62rem; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--ink-soft); opacity:.5;
+  transition:color var(--t);
+}
+body.night .cards-footer{ color:#7a6a58; }
+
+@media (prefers-reduced-motion: reduce){
+  .carousel, .firefly, .fog, .card.is-wolf, .card{ animation:none !important; }
+}

@@ -1,0 +1,158 @@
+:root{
+  --room-bg-day: linear-gradient(160deg,#f6ecd6 0%, #e7d8b2 100%);
+  --room-bg-night: linear-gradient(160deg,#1c1013 0%, #100a0c 100%);
+  --line-day: rgba(138, 109, 63, 0.45);
+  --line-night: rgba(154, 17, 40, 0.45);
+}
+
+/* Map container with explicit row layout spacing to easily buffer corridors */
+.map-container{
+  position:relative; z-index:2;
+  display:grid; grid-template-columns:240px 240px; grid-template-rows:repeat(4, minmax(112px, auto));
+  gap:42px 34px; padding:34px;
+  background: linear-gradient(160deg,#dccaa1 0%, #c9b483 100%);
+  border: 1px solid var(--border-day);
+  border-radius:4px;
+  box-shadow: 0 20px 50px rgba(40,25,10,.3);
+  width:fit-content;
+  transition: background var(--t), border-color var(--t), box-shadow var(--t);
+  margin: 0 auto;
+}
+body.night .map-container{
+  background: linear-gradient(160deg,#150c0e 0%, #0a0607 100%);
+  border-color: var(--border-night);
+  box-shadow: 0 20px 50px rgba(0,0,0,.75);
+}
+
+.room{
+  background: var(--room-bg-day);
+  border: 1px solid var(--border-day);
+  border-radius: 3px; padding: 14px 10px 12px;
+  display:flex; flex-direction:column; align-items:center; justify-content:flex-start;
+  position:relative;
+  box-shadow: 0 6px 16px rgba(40,25,10,.18);
+  transition: transform .3s ease, border-color .4s, box-shadow .4s, background .4s;
+  z-index: 5;
+}
+body.night .room{ background: var(--room-bg-night); border-color: var(--border-night); box-shadow:0 6px 16px rgba(0,0,0,.5); }
+
+.room:hover{ transform: translateY(-3px); border-color: var(--oxblood-bright); }
+body.night .room:hover{ border-color: var(--blood-bright); }
+
+#attic{ grid-column:1; grid-row:1; border-color: var(--oxblood-bright); border-width:2px; }
+body.night #attic{ border-color: var(--blood-bright); }
+#library{grid-column:1; grid-row:2;}
+#study{grid-column:2; grid-row:2;}
+#hall{grid-column:1; grid-row:3;}
+#courtyard{grid-column:2; grid-row:3;}
+#kitchen{grid-column:1; grid-row:4;}
+#cellar{grid-column:2; grid-row:4;}
+
+/* --- PROCEDURAL CONNECTOR PATHS (THE LINES) --- */
+.room::before, .room::after {
+  content: '';
+  position: absolute;
+  background-color: var(--line-day);
+  z-index: -1;
+  pointer-events: none;
+  transition: background-color var(--t);
+}
+body.night .room::before, body.night .room::after {
+  background-color: var(--line-night);
+}
+
+/* Vertical Path: Attic -> Library */
+#attic::after {
+  width: 2px; height: 44px;
+  bottom: -44px; left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Vertical Path: Library -> Hall */
+#library::after {
+  width: 2px; height: 44px;
+  bottom: -44px; left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Vertical Path: Hall -> Kitchen */
+#hall::after {
+  width: 2px; height: 44px;
+  bottom: -44px; left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Vertical Path: Courtyard -> Cellar */
+#courtyard::after {
+  width: 2px; height: 44px;
+  bottom: -44px; left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Horizontal Path: Library <-> Study */
+#library::before {
+  height: 2px; width: 36px;
+  right: -36px; top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Horizontal Path: Hall <-> Courtyard */
+#hall::before {
+  height: 2px; width: 36px;
+  right: -36px; top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Horizontal Path: Kitchen <-> Cellar */
+#kitchen::before {
+  height: 2px; width: 36px;
+  right: -36px; top: 50%;
+  transform: translateY(-50%);
+}
+
+
+.room-title{
+  font-family:'Cinzel', serif; font-weight:700; font-size:1rem; letter-spacing:.08em; text-transform:uppercase;
+  color: var(--ink); margin-bottom:3px; transition:color var(--t);
+}
+body.night .room-title{ color: var(--moon); }
+
+.room-subtitle{
+  font-family:'Cinzel', serif;
+  font-size:.66rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase;
+  color: var(--oxblood-bright); margin-bottom:12px; transition:color var(--t);
+  min-height: .9em;
+}
+body.night .room-subtitle{ color: var(--blood-bright); }
+
+.agent-dock{ display:flex; flex-wrap:wrap; gap:6px; justify-content:center; width:100%; margin-top:auto; }
+
+.agent-badge{
+  font-family:'Cinzel', serif; font-size:.72rem; font-weight:700; letter-spacing:.03em;
+  color:#1c150c; padding:4px 11px; border-radius:11px;
+  border:1px solid rgba(0,0,0,.25);
+  box-shadow:0 2px 6px rgba(0,0,0,.2);
+  animation: sealIn .35s cubic-bezier(.175,.885,.32,1.4);
+  white-space:nowrap; position:relative;
+  transition: transform .2s ease, box-shadow .3s;
+}
+.agent-badge:hover{ transform: translateY(-2px) scale(1.05); box-shadow:0 4px 10px rgba(0,0,0,.3); }
+body.night .agent-badge{
+  color:#1c150c;
+  box-shadow:0 0 0 1px rgba(255,255,255,.15), 0 2px 8px rgba(0,0,0,.45);
+}
+
+@keyframes sealIn{ 0%{ transform:scale(.6) rotate(-8deg); opacity:0;} 100%{ transform:scale(1) rotate(0); opacity:1;} }
+
+#attic{ animation: flicker 6s ease-in-out infinite; }
+@keyframes flicker{
+  0%,100%{ box-shadow:0 6px 16px rgba(40,25,10,.18); }
+  50%{ box-shadow:0 6px 18px rgba(184,56,74,.22); }
+}
+body.night #attic{ animation-name: flickerNight; }
+@keyframes flickerNight{
+  0%,100%{ box-shadow:0 6px 16px rgba(0,0,0,.5); }
+  50%{ box-shadow:0 0 16px rgba(232,88,106,.25); }
+}
+
+@media (prefers-reduced-motion: reduce){ #attic, .agent-badge{ animation:none !important; } }

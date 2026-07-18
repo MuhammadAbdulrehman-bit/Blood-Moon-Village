@@ -1,0 +1,36 @@
+[SPEAK] Sylva (in Hall): Anyone notice anything strange about the movements last night?
+[MOVE] Brennan moved from Hall to Library.
+[MOVE] Isolde moved from Hall to Courtyard.
+[MOVE] Theron moved from Hall to Library.
+[SPEAK] Wren (in Hall): Listen up, everyone: Aldric just executed a kill on Corvus, and Maren just used wolf_communicate. That's a clear sign they're the wolves. We need to lynch Aldric and Maren at day.
+[MOVE] Sylva moved from Hall to Library.
+[MOVE] Brennan moved from Library to Study.
+[MOVE] Isolde moved from Courtyard to Hall.
+[SPEAK] Theron (in Library): Aldric, why did you choose to attack me tonight? Can you tell us what you saw?
+[MOVE] Wren moved from Hall to Library.
+[CONFERENCE] Round 1 conference begins. Discuss and vote.
+[DEFEND] Aldric: I understand the shock, but I assure you I had no part in any kill. I was in the Library all night, observing movements. It was Theron's sudden appearance in the Hall that seemed odd, and Sylva's vague comment about strange movements was the only thing that caught my attention. I think we should focus on who had the opportunity, not jump to conclusions.
+[DEFEND] Maren: I understand the concern, but I was simply moving between rooms like everyone else. I never used any secret communication—Wren's claim is mistaken. Let's focus on who was actually acting suspiciously last night, like the ones who lingered alone in the Library.
+[SPEAK] Corvus (in Attic): Everyone, the accusations are flying fast. Wren mentioned that Aldric supposedly killed me, but I’m here alive, so that claim seems off. Also, Maren was said to have used wolf_communicate, yet I haven't seen any clear evidence of that. I think we should focus on who moved oddly last night: Theron and Wren both bounced between Library and Hall, and Isolde was in Courtyard then Hall. Any thoughts on who might be covering their tracks?
+[SPEAK] Sylva (in Library): Wren, your accusation seems off – Corvus was in the Attic last night, not near Aldric, and I haven't observed any wolf communication from Maren. Also, I've inspected Isolde and she's a villager. Can anyone confirm what actually happened?
+[SPEAK] Brennan (in Study): Wren, your claim about Aldric killing Corvus and Maren using wolf_communicate sounds serious—what evidence do you have? Did anyone else see anything?
+[SPEAK] Isolde (in Hall): Wren, you mentioned Aldric killed Corvus and Maren used wolf_communicate. Could you share what you actually saw or heard that leads you to that conclusion? Did anyone else notice anything unusual?
+[ACCUSE] Theron accuses Wren. Reason: You claimed Aldric killed Corvus, yet Corvus is here alive and speaking. This false accusation suggests you are trying to mislead us, which is typical wolf behavior.
+[DEFEND] Wren: Theron, I was with you in the Hall before moving to the Library – I never attacked anyone. I have no wolf abilities and was only asking questions last night. The claim that Aldric killed Corvus is unverified; I saw no violence. I suspect the wolves are those who used wolf_communicate and are overly defensive, like Maren, but I am not the culprit.
+[SPEAK] Aldric (in Library): Isolde, you were seen moving from the Courtyard to the Hall last night. Can you tell us what you were doing there and if you saw anyone acting suspiciously?
+[ACCUSE] Maren accuses Wren. Reason: Wren has been spreading false claims that Aldric killed Corvus and that I used wolf_communicate, despite there being no evidence. Their accusations seem designed to divert attention from the real wolves and they appear to know details only a wolf would claim.
+[SPEAK] Corvus (in Attic): Theron, you called out Wren for a false claim about Aldric killing me—what evidence led you to think Wren was lying? And Wren, could you walk us through exactly where you were during the night, especially around the time the alleged kill was supposed to happen?
+[SPEAK] Sylva (in Library): Theron, you called out Wren for a claim that turned out to be false – Aldric is clearly alive, so the 'kill' never happened. What made you think Wren was lying? Did you personally see any wolf activity, or are you basing it on something else? Also, Aldric mentioned he was in the Library all night; I was there too with Theron and Wren. Can anyone confirm where they were during the night?
+[ACCUSE] Brennan accuses Wren. Reason: Wren claimed Aldric killed Corvus and that Maren used wolf_communicate, yet Corvus is alive and no one saw any wolf communication. This false, unverified accusation is classic wolf misdirection.
+[ACCUSE] Isolde accuses Wren. Reason: Wren claimed Aldric killed Corvus, yet Corvus is alive and speaking, and Wren has been defensive and deflecting accusations. Multiple players have pointed out this false claim, suggesting Wren is trying to mislead us, a typical wolf behavior.
+[SPEAK] Theron (in Library): Wren, you mentioned you were with me in the Hall before heading to the Library. Did you see anyone else there or notice anything unusual? Also, how can you be sure Aldric didn't attack Corvus?
+[SPEAK] Wren (in Library): Everyone, we need concrete evidence. Aldric, can you list the rooms you were in each night and who, if anyone, saw you there? Maren, can anyone confirm you used wolf_communicate, or provide what you heard? Also, does anyone have a clear recollection of who was alone in the Library or Hall during the night? Let's focus on verifiable observations.
+[VOTE] Aldric votes to lynch Wren.
+[VOTE] Maren votes to lynch Theron.
+[VOTE] Corvus votes to lynch Wren.
+[VOTE] Sylva votes to lynch Wren.
+[VOTE] Brennan votes to lynch Wren.
+[VOTE] Isolde votes to lynch Wren.
+[VOTE] Theron votes to lynch Wren.
+[VOTE] Wren votes to lynch Aldric.
+[LYNCH] Wren was lynched. They were a villager.
